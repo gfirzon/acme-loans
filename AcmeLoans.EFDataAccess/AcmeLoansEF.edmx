@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AcmeLoansModelEF.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Applicants">
+          <Key>
+            <PropertyRef Name="ApplicantID" />
+          </Key>
+          <Property Name="ApplicantID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SSN" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+          <Property Name="StreetAddress" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StateId" Type="int" Nullable="false" />
+          <Property Name="Zip" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="HomePhone" Type="varchar" MaxLength="50" />
+          <Property Name="MobilePhone" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Applications">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="ApplicationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoanTypeId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="IsProcessed" Type="bit" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="ProcessedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LoanTypes">
+          <Key>
+            <PropertyRef Name="LoanTypeId" />
+          </Key>
+          <Property Name="LoanTypeId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="OrderId" />
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="States">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateCode" Type="nchar" MaxLength="2" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Applications_LoanTypes">
+          <End Role="LoanTypes" Type="Self.LoanTypes" Multiplicity="1" />
+          <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoanTypes">
+              <PropertyRef Name="LoanTypeId" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="LoanTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_DeleteLoanApplication" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ApplicationId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_GetAppViewModel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_GetLoanApplicationById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ApplicationId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_GetLoanApplicationsByProcessedType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IsProcessed" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="sp_GetPersonStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="age" Type="int" Mode="In" />
+          <Parameter Name="gender" Type="char" Mode="In" />
+        </Function>
+        <Function Name="sp_InsertLoanApplicant" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SSN" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="nvarchar" Mode="In" />
+          <Parameter Name="FirstName" Type="nvarchar" Mode="In" />
+          <Parameter Name="DateOfBirth" Type="datetime" Mode="In" />
+          <Parameter Name="StreetAddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="City" Type="nvarchar" Mode="In" />
+          <Parameter Name="StateId" Type="int" Mode="In" />
+          <Parameter Name="Zip" Type="nvarchar" Mode="In" />
+          <Parameter Name="HomePhone" Type="nvarchar" Mode="In" />
+          <Parameter Name="MobilePhone" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="ApplicantId" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="sp_InsertLoanApplication" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LoanTypeId" Type="int" Mode="In" />
+          <Parameter Name="Amount" Type="money" Mode="In" />
+          <Parameter Name="IsProcessed" Type="bit" Mode="In" />
+          <Parameter Name="Created" Type="datetime" Mode="In" />
+          <Parameter Name="appId" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="sp_UpdateLoanApplication" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ApplicationId" Type="int" Mode="In" />
+          <Parameter Name="LoanTypeId" Type="int" Mode="In" />
+          <Parameter Name="Amount" Type="money" Mode="In" />
+          <Parameter Name="IsProcessed" Type="bit" Mode="In" />
+          <Parameter Name="ProcessedDate" Type="datetime" Mode="In" />
+        </Function>
+        <EntityContainer Name="AcmeLoansModelEFStoreContainer">
+          <EntitySet Name="Applicants" EntityType="Self.Applicants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Applications" EntityType="Self.Applications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoanTypes" EntityType="Self.LoanTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Applications_LoanTypes" Association="Self.FK_Applications_LoanTypes">
+            <End Role="LoanTypes" EntitySet="LoanTypes" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AcmeLoansModelEF" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Applicant">
+          <Key>
+            <PropertyRef Name="ApplicantID" />
+          </Key>
+          <Property Name="ApplicantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SSN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StreetAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StateId" Type="Int32" Nullable="false" />
+          <Property Name="Zip" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HomePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobilePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Application">
+          <Key>
+            <PropertyRef Name="ApplicationId" />
+          </Key>
+          <Property Name="ApplicationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoanTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="IsProcessed" Type="Boolean" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProcessedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="LoanType" Relationship="Self.FK_Applications_LoanTypes" FromRole="Applications" ToRole="LoanTypes" />
+        </EntityType>
+        <EntityType Name="LoanType">
+          <Key>
+            <PropertyRef Name="LoanTypeId" />
+          </Key>
+          <Property Name="LoanTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Applications" Relationship="Self.FK_Applications_LoanTypes" FromRole="LoanTypes" ToRole="Applications" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="OrderId" />
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateCode" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="StateName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Applications_LoanTypes">
+          <End Role="LoanTypes" Type="Self.LoanType" Multiplicity="1" />
+          <End Role="Applications" Type="Self.Application" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoanTypes">
+              <PropertyRef Name="LoanTypeId" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="LoanTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AcmeLoansEntitiesEF" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Applicants" EntityType="Self.Applicant" />
+          <EntitySet Name="Applications" EntityType="Self.Application" />
+          <EntitySet Name="LoanTypes" EntityType="Self.LoanType" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+          <EntitySet Name="States" EntityType="Self.State" />
+          <AssociationSet Name="FK_Applications_LoanTypes" Association="Self.FK_Applications_LoanTypes">
+            <End Role="LoanTypes" EntitySet="LoanTypes" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <FunctionImport Name="sp_DeleteLoanApplication">
+            <Parameter Name="ApplicationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetAppViewModel" ReturnType="Collection(AcmeLoansModelEF.sp_GetAppViewModel_Result)" />
+          <FunctionImport Name="sp_GetLoanApplicationById" ReturnType="Collection(AcmeLoansModelEF.sp_GetLoanApplicationById_Result)">
+            <Parameter Name="ApplicationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetLoanApplicationsByProcessedType" ReturnType="Collection(AcmeLoansModelEF.sp_GetLoanApplicationsByProcessedType_Result)">
+            <Parameter Name="IsProcessed" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="sp_GetPersonStatus" ReturnType="Collection(String)">
+            <Parameter Name="age" Mode="In" Type="Int32" />
+            <Parameter Name="gender" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsertLoanApplicant">
+            <Parameter Name="SSN" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="DateOfBirth" Mode="In" Type="DateTime" />
+            <Parameter Name="StreetAddress" Mode="In" Type="String" />
+            <Parameter Name="City" Mode="In" Type="String" />
+            <Parameter Name="StateId" Mode="In" Type="Int32" />
+            <Parameter Name="Zip" Mode="In" Type="String" />
+            <Parameter Name="HomePhone" Mode="In" Type="String" />
+            <Parameter Name="MobilePhone" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="ApplicantId" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_InsertLoanApplication">
+            <Parameter Name="LoanTypeId" Mode="In" Type="Int32" />
+            <Parameter Name="Amount" Mode="In" Type="Decimal" />
+            <Parameter Name="IsProcessed" Mode="In" Type="Boolean" />
+            <Parameter Name="Created" Mode="In" Type="DateTime" />
+            <Parameter Name="appId" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_UpdateLoanApplication">
+            <Parameter Name="ApplicationId" Mode="In" Type="Int32" />
+            <Parameter Name="LoanTypeId" Mode="In" Type="Int32" />
+            <Parameter Name="Amount" Mode="In" Type="Decimal" />
+            <Parameter Name="IsProcessed" Mode="In" Type="Boolean" />
+            <Parameter Name="ProcessedDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_GetAppViewModel_Result">
+          <Property Type="Int32" Name="ApplicationId" Nullable="false" />
+          <Property Type="Int32" Name="LoanTypeId" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_GetLoanApplicationById_Result">
+          <Property Type="Int32" Name="ApplicationId" Nullable="false" />
+          <Property Type="Int32" Name="LoanTypeId" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" />
+          <Property Type="Boolean" Name="IsProcessed" Nullable="false" />
+          <Property Type="DateTime" Name="Created" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ProcessedDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="sp_GetLoanApplicationsByProcessedType_Result">
+          <Property Type="Int32" Name="ApplicationId" Nullable="false" />
+          <Property Type="Int32" Name="LoanTypeId" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" />
+          <Property Type="Boolean" Name="IsProcessed" Nullable="false" />
+          <Property Type="DateTime" Name="Created" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ProcessedDate" Nullable="true" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AcmeLoansModelEFStoreContainer" CdmEntityContainer="AcmeLoansEntitiesEF">
+          <EntitySetMapping Name="Applicants">
+            <EntityTypeMapping TypeName="AcmeLoansModelEF.Applicant">
+              <MappingFragment StoreEntitySet="Applicants">
+                <ScalarProperty Name="ApplicantID" ColumnName="ApplicantID" />
+                <ScalarProperty Name="SSN" ColumnName="SSN" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="StreetAddress" ColumnName="StreetAddress" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="HomePhone" ColumnName="HomePhone" />
+                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Applications">
+            <EntityTypeMapping TypeName="AcmeLoansModelEF.Application">
+              <MappingFragment StoreEntitySet="Applications">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="LoanTypeId" ColumnName="LoanTypeId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="IsProcessed" ColumnName="IsProcessed" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="ProcessedDate" ColumnName="ProcessedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoanTypes">
+            <EntityTypeMapping TypeName="AcmeLoansModelEF.LoanType">
+              <MappingFragment StoreEntitySet="LoanTypes">
+                <ScalarProperty Name="LoanTypeId" ColumnName="LoanTypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="AcmeLoansModelEF.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="AcmeLoansModelEF.State">
+              <MappingFragment StoreEntitySet="States">
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_DeleteLoanApplication" FunctionName="AcmeLoansModelEF.Store.sp_DeleteLoanApplication" />
+          <FunctionImportMapping FunctionImportName="sp_GetAppViewModel" FunctionName="AcmeLoansModelEF.Store.sp_GetAppViewModel">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AcmeLoansModelEF.sp_GetAppViewModel_Result">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="LoanTypeId" ColumnName="LoanTypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetLoanApplicationById" FunctionName="AcmeLoansModelEF.Store.sp_GetLoanApplicationById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AcmeLoansModelEF.sp_GetLoanApplicationById_Result">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="LoanTypeId" ColumnName="LoanTypeId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="IsProcessed" ColumnName="IsProcessed" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="ProcessedDate" ColumnName="ProcessedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetLoanApplicationsByProcessedType" FunctionName="AcmeLoansModelEF.Store.sp_GetLoanApplicationsByProcessedType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AcmeLoansModelEF.sp_GetLoanApplicationsByProcessedType_Result">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="LoanTypeId" ColumnName="LoanTypeId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="IsProcessed" ColumnName="IsProcessed" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="ProcessedDate" ColumnName="ProcessedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetPersonStatus" FunctionName="AcmeLoansModelEF.Store.sp_GetPersonStatus" />
+          <FunctionImportMapping FunctionImportName="sp_InsertLoanApplicant" FunctionName="AcmeLoansModelEF.Store.sp_InsertLoanApplicant" />
+          <FunctionImportMapping FunctionImportName="sp_InsertLoanApplication" FunctionName="AcmeLoansModelEF.Store.sp_InsertLoanApplication" />
+          <FunctionImportMapping FunctionImportName="sp_UpdateLoanApplication" FunctionName="AcmeLoansModelEF.Store.sp_UpdateLoanApplication" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

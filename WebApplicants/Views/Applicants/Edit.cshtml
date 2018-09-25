@@ -1,0 +1,20 @@
+﻿@model int
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<input type="hidden" id="hdnAppId" value="@Model" />
+
+<h2>Edit</h2>
+
+<label>SSN</label>
+<input type="text" id="txtSSN" />
+
+
+@section PageScript
+{
+    <script src="~/Scripts/mustache.js"></script>
+    <script src="~/Scripts/views/applicants/edit.js"></script>
+}
+

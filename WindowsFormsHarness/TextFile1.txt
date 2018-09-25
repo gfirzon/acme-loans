@@ -1,0 +1,28 @@
+﻿enum P
+{
+	a, b, c
+}
+P p1; //p1 can store values a b or c
+
+class C : IX
+{
+}
+
+C c1; //c1 can store address of object of type C or its derived class
+
+interface IX
+{
+}
+
+IX ix1; //ix1 can store address of an object whose class implements IX interface
+
+delegate void Foo();
+
+Foo foo1; 
+//foo1 can store address of (Any)function that takes no params 
+//and whose return type: void
+
+delegate int Faa(string n);
+Faa faa1; 
+//faa1 can store address of (Any)function that takes 1 param of type string 
+//and whose return type: int

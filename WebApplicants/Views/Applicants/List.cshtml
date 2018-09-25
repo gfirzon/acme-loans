@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    <a href="/Applicants/Create">Create New</a>
+</p>
+
+
+<div id="tableContainer"></div>
+
+<script id="templateTable" type="text/html">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>SSN</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Birthday</th>
+                <th>Street</th>
+                <th></th>
+            </tr>
+
+        </thead>
+        <tbody>
+            {{#.}}
+
+            <tr>
+                <td>{{SSN}}</td>
+                <td>{{LastName}}</td>
+                <td>{{FirstName}}</td>
+                <td>{{ DisplayBirthday}}</td>
+                <td>{{StreetAddress}}</td>
+                <td><a href="Edit/{{ApplicantId}}">Edit</a></td>
+            </tr>
+            {{/.}}
+
+        </tbody>
+    </table>
+</script>
+
+
+@section PageScript
+{
+    <script src="~/Scripts/mustache.js"></script>
+    <script src="~/Scripts/views/applicants/list.js"></script>
+}

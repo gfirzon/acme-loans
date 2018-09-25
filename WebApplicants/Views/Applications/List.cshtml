@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    <a href="/Application/Create">Create New</a>
+</p>
+
+
+<div id="tableContainer"></div>
+
+<script id="templateTable" type="text/html">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Processed Date</th>
+                <th>Created</th>
+                <th></th>
+            </tr>
+
+        </thead>
+        <tbody>
+            {{#.}}
+
+            <tr>
+                <td>{{Description}}</td>
+                <td>{{AmountForVm}}</td>
+                <td>{{ProcesedDateVm}}</td>
+                <td>{{CreatedForVm}}</td>
+                <td><a href="Edit/{{ApplicationId}}">Edit</a></td>
+            </tr>
+            {{/.}}
+
+        </tbody>
+    </table>
+</script>
+
+
+@section PageScript
+{
+    <script src="~/Scripts/mustache.js"></script>
+    <script src="~/Scripts/views/applications/list.js"></script>
+}
