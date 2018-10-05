@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AcmeLoans.Common
 {
     public class State
-        {
+    {
         public int StateID { get; set; }
         public string StateCode { get; set; }
         public string StateName { get; set; }
