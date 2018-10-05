@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcmeLoans.EFDataAccess", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfClient", "EfClient\EfClient.csproj", "{5CD76B94-DE29-4FCC-AFA9-7B785333AEF8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcmeLoans.API", "AcmeLoans.API\AcmeLoans.API.csproj", "{FF637AD2-A1ED-4918-BCB8-257E37FEAA9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{5CD76B94-DE29-4FCC-AFA9-7B785333AEF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CD76B94-DE29-4FCC-AFA9-7B785333AEF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CD76B94-DE29-4FCC-AFA9-7B785333AEF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF637AD2-A1ED-4918-BCB8-257E37FEAA9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF637AD2-A1ED-4918-BCB8-257E37FEAA9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF637AD2-A1ED-4918-BCB8-257E37FEAA9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF637AD2-A1ED-4918-BCB8-257E37FEAA9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
