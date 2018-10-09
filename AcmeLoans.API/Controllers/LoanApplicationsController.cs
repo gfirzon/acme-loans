@@ -15,5 +15,25 @@ namespace AcmeLoans.API.Controllers
         {
             int n = 1;
         }
+        //GET api/values/5
+        public LoanApplication Get(string lastName)
+        {
+            LoanApplication loan = new LoanApplication();
+            loan.LastName = lastName;
+            loan.Amount = 60000;
+
+            return loan;
+        }
+        // GET api/values
+        public IEnumerable<LoanApplication> Get()
+        {
+            List<LoanApplication> apps =  new List<LoanApplication>();
+
+            apps.Add(new LoanApplication { LastName="AAA", Amount = 888 });
+            apps.Add(new LoanApplication { LastName = "BBB", Amount = 999 });
+
+            return apps;
+        }
     }
+
 }
