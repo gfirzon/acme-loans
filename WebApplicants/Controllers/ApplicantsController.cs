@@ -17,7 +17,7 @@ namespace WebApplicants.Controllers
             return View();
         }
 
-        [HttpGet]
+        //[HttpGet]
         public ActionResult GetApplicantList()
         {
             ApplicantsManager manager = new ApplicantsManager();

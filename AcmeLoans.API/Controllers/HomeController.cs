@@ -4,10 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
 
 namespace AcmeLoans.API.Controllers
 {
-    public class HomeController : ApiController
+    public class HomeController : Controller
     {
         public ActionResult Index()
         {
